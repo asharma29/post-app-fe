@@ -40,16 +40,16 @@ function Navbar({ isOpen, setIsOpen }) {
 							bg="danger"
 							className="position-absolute top-0 end-md-0"
 						>
-							5
+							2
 						</Badge>
 					</Nav.Link>
-					<NavDropdown title={'User Name'} id="Admin-nav-dropdown">
+					{/* <NavDropdown title={'User Name'} id="Admin-nav-dropdown">
 						<NavDropdown.Item>Option 1</NavDropdown.Item>
 						<NavDropdown.Divider />
 						<NavDropdown.Item>Option 2</NavDropdown.Item>
 						<NavDropdown.Item>Option 3</NavDropdown.Item>
 						<NavDropdown.Item>Option 4</NavDropdown.Item>
-					</NavDropdown>
+					</NavDropdown> */}
 				</Nav>
 			</BootstrapNavbar.Collapse>
 		</BootstrapNavbar>
