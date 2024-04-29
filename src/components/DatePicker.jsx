@@ -15,6 +15,7 @@ const DatePicker = ({ setStartDate, setEndDate, startDate, endDate }) => {
 				placeholderText="Select Date"
 				withPortal
 			/>
+			<p> this is home </p>
 		</div>
 	);
 };

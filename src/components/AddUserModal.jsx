@@ -8,38 +8,44 @@ import API from '../api/api.js';
 const AddUserModal = ({ handleClose, show, setUsers }) => {
 	const formRef = useRef(null);
 	const [errorMessage, setErrorMessage] = useState('');
-	const [setName] = useState("");
-	const [setEmail] = useState("");
 
 	const handleAddUser = async (e) => {
 		e.preventDefault();
 			try {
-
 				const { data: res } = await API.post('/users' ,  {
-				
-			name: formRef.current.name.value.trim(),
-			email: formRef.current.email.value.trim(),
-
-		
-
+				name: formRef.current.name.value.trim(),
+				entryNum: formRef.current.entryNum.value.trim(),
+				email: formRef.current.email.value.trim(),
 			})
 
-		setErrorMessage('');
-		console.log(formRef.current.name.value);
-		console.log(formRef.current.email.value);
-		// if (!email)
-		// 	return setErrorMessage('Please Enter All Fields');
-			// let resJson = await res;
-			if(res.status ===  200){
-				setName("");
-                setEmail("");
+			if(res.status === 500){
+				return setErrorMessage('User Exsit');		
 			}
+			setErrorMessage('');
+			if (!formRef.current.name.value || !formRef.current.entryNum.value || !formRef.current.email.value)
+				return setErrorMessage('Please Enter All Fields');
+				if(res.status ===  200){
+					setUsers((prev) => ({
+						loading: false,
+						error: false,
+						data: [
+							{
+								name: formRef.current.name.value,
+								entryNum: formRef.current.userName.value,
+								email: formRef.current.email.value,
+							...prev.data,
+							}
+						],
+					}));
+				}
+			
+	
 			handleClose();
 			} catch (error) {
-				console.log("🚀 ~ file: AddUserModal.jsx ~ line 48 ~ handleAddUser ~ error", error)
+				console.log("🚀 ~ file: AddUserModal.jsx ~ line 47 ~ handleAddUser ~ error", error)
 				
 			}
-		
+	
 	};
 	return (
 		<>
@@ -63,16 +69,16 @@ const AddUserModal = ({ handleClose, show, setUsers }) => {
 							/>
 						</Form.Group>
 
-						{/* <Form.Group className="mb-3">
-							<Form.Label className="fw-bold"> User Name</Form.Label>
+						<Form.Group className="mb-3">
+							<Form.Label className="fw-bold"> Entry Num</Form.Label>
 							<Form.Control
 								required
-								placeholder="Enter userName"
-								type="text"
-								name="userName"
+								placeholder="Enter entryNum"
+								type="number"
+								name="entryNum"
 								variant="success"
 							/>
-						</Form.Group> */}
+						</Form.Group>
 
 						<Form.Group className="mb-3">
 							<Form.Label className="fw-bold"> Email</Form.Label>
@@ -92,9 +98,9 @@ const AddUserModal = ({ handleClose, show, setUsers }) => {
 								<option value="Managers">Managers</option>
 								<option value="HeadOffice">Head Office</option>
 							</Form.Select>
-						</Form.Group> */}
+						</Form.Group>
 
-						{/* <Form.Group className="mb-3">
+						<Form.Group className="mb-3">
 							<Form.Label className="fw-bold"> Assign Profile</Form.Label>
 							<Form.Select required name="profile">
 								<option disabled>choose user profile</option>
